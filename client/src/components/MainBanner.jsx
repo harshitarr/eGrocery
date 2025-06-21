@@ -12,31 +12,32 @@ const MainBanner = () => {
       <img src={mainbannersm} alt="banner" className='w-full md:hidden' />
 
       {/* Banner Content */}
-      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-4'>
-        <h1 className='text-2xl md:text-4xl font-semibold text-black mb-6'>
-          Get everything you need without stepping outside
+      <div className='absolute inset-0 flex flex-col items-center md:items-start justify-end md:justify-center pb-24 md:pb-0 px-4 md:pl-18 lg:pl-24 text-center md:text-left'>
+        <h1 className='text-3xl sm:font-bold  md:text-3xl lg:text-5xl font-bold md:font-bold text-black leading-tight max-w-72 md:max-w-80 lg:max-w-105'>
+          Freshness You Can Trust, Savings You Will Love!
         </h1>
 
         {/* Buttons */}
-        <div className='flex flex-col md:flex-row gap-4 justify-center'>
-          {/* Mobile Button */}
-          <Link 
-            to='/products' 
-            className='group flex items-center bg-green-600 justify-center gap-2 px-7 md:px-9 py-3 bg-primary hover:bg-primary-dull transition rounded text-white cursor-pointer'
-          > 
-            Shop Now 
-            <FaRegArrowAltCircleRight className='text-white transition group-hover:translate-x-1' />
-          </Link>
+      <div className='flex flex-col md:flex-row gap-4 mt-6 font-medium items-center md:items-start justify-center md:justify-start'>
+        {/* Shop Now - Always visible */}
+        <Link 
+          to='/products' 
+          className='group flex items-center justify-center gap-2 px-7 py-3 text-base md:px-6 md:py-2.5 md:text-sm lg:px-9 lg:py-3 lg:text-base bg-green-600 hover:bg-primary-dull transition rounded text-white cursor-pointer'
+        > 
+          Shop Now 
+          <FaRegArrowAltCircleRight className='text-white transition group-hover:translate-x-1' />
+        </Link>
 
-          {/* Desktop Button */}
-          <Link 
-            to='/products' 
-            className='group hidden md:flex bg-gray-400 items-center gap-2 px-9 py-3 bg-primary hover:bg-primary-dull transition rounded text-white cursor-pointer'
-          > 
-            Explore Deals
-            <FaRegArrowAltCircleRight className='text-white transition group-hover:translate-x-1' />
-          </Link>
-        </div>
+        {/* Explore Deals - Visible on md and up */}
+        <Link 
+          to='/products' 
+          className='group hidden md:flex items-center gap-2 px-7 py-3 text-sm md:px-6 md:py-2.5 md:text-sm lg:px-9 lg:py-3 lg:text-base border border-green-600 text-green-600 hover:bg-transparent transition rounded cursor-pointer'
+        > 
+          Explore Deals
+          <FaRegArrowAltCircleRight className='transition group-hover:translate-x-1 text-green-600' />
+        </Link>
+      </div>
+
       </div>
     </div>
   );
