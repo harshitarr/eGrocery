@@ -63,7 +63,7 @@ const AppContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    fetchProducts(); // ✅ call the function
+    fetchProducts(); 
   }, []);
 
   const value = {
@@ -90,5 +90,5 @@ const AppContextProvider = ({ children }) => {
   );
 };
 
-export { AppContextProvider }; // ✅ consistent named export
+export { AppContextProvider }; 
 export const useAppContext = () => useContext(AppContext);

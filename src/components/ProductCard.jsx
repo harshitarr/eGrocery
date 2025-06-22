@@ -35,14 +35,14 @@ const ProductCard = ({ product }) => {
         <p className="text-xs text-gray-500/60">{product.category}</p>
         <p className="text-sm font-semibold text-gray-800 truncate">{product.name}</p>
 
-        {/* Star rating (optional, uncomment if needed)
+        {/* Star rating (optional, uncomment if needed) */}
         <div className="flex items-center gap-0.5 mt-1 text-green-500 text-sm">
           {Array(5).fill('').map((_, i) =>
             product.rating > i ? <AiFillStar key={i} /> : <AiOutlineStar key={i} />
           )}
           <p className="text-xs text-green-600">({product.rating})</p>
         </div> 
-        */}
+       
 
         {/* Price */}
         <p className="text-green-600 font-medium text-sm mt-1">
@@ -51,7 +51,7 @@ const ProductCard = ({ product }) => {
         </p>
 
         {/* Cart / Quantity */}
-        <div className="absolute bottom-2 right-3">
+        <div onClick = {(e) =>{ e.stopPropagation()}}className="absolute bottom-2 right-3">
           {!cartItems[product._id] ? (
             <button
               onClick={handleAddToCart}
