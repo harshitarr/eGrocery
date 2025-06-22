@@ -1,20 +1,94 @@
-import { createContext, useContext, useState } from 'react'; // Import necessary React hooks
-import { useNavigate } from 'react-router-dom';               // Import useNavigate for navigation
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { dummyProducts } from '../assets/assets';
+import toast from "react-hot-toast"
 
-export const AppContext = createContext();                    // Create a new context
+export const AppContext = createContext();
 
-export const AppContextProvider = ({ children }) => {         // Context Provider component to wrap the app
-  const navigate = useNavigate();                             // Hook for programmatic navigation
-  const [user, setUser] = useState(null);                     // State to hold user info
-  const [IsSeller, setIsSeller] = useState(false);            // State to check if user is a seller
+const AppContextProvider = ({ children }) => {
+  const currency = import.meta.env.VITE_CURRENCY;
+  const navigate = useNavigate();
+  
+  const [user, setUser] = useState(null);
+  const [IsSeller, setIsSeller] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
-  const value = { navigate, user, setUser, setIsSeller, IsSeller,showUserLogin, setShowUserLogin}; // Object containing all global values
+  const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState({});
+
+  // Fetch dummy products
+  const fetchProducts = async () => {
+    setProducts(dummyProducts);
+  };
+
+  // Add item to cart
+  const addToCart = (itemId) => {
+    const cartData = structuredClone(cartItems);
+
+    if (cartData[itemId]) {
+      cartData[itemId] += 1;
+    } else {
+      cartData[itemId] = 1;
+    }
+
+    setCartItems(cartData);
+    toast.success('Added to Cart');
+  };
+
+  //Update cart item quantity
+
+  const updateCartItem = (itemId , quantity)=>{
+
+    let cartData = structuredClone(cartItems)
+    cartData[itemId] = quantity
+    setCartItems(cartData)
+    toast.success("Cart Updated")
+  }
+
+  //Remove products from Cart
+
+  const removeFromCart = (itemId) => {
+
+    let cartData = structuredClone(cartItems)
+    if(cartData[itemId]){
+
+      cartData[itemId] -= 1
+
+      if(cartData[itemId]==0){
+         delete cartData[itemId]
+      }
+    }
+
+    toast.success("Removed from Cart")
+    setCartItems(cartData)
+  }
+
+  useEffect(() => {
+    fetchProducts(); // ✅ call the function
+  }, []);
+
+  const value = {
+    navigate,
+    user,
+    setUser,
+    IsSeller,
+    setIsSeller,
+    showUserLogin,
+    setShowUserLogin,
+    products,
+    currency,
+    cartItems,
+    addToCart,
+    updateCartItem,
+    removeFromCart,
+   
+  };
 
   return (
-    <AppContext.Provider value={value}>                       {/* Provide context value to children */}
-      {children}                                              {/* Render all nested components */}
+    <AppContext.Provider value={value}>
+      {children}
     </AppContext.Provider>
   );
 };
 
-export const useAppContext = () => useContext(AppContext);    // Custom hook to access context easily
+export { AppContextProvider }; // ✅ consistent named export
+export const useAppContext = () => useContext(AppContext);
