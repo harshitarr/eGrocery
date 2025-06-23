@@ -26,16 +26,16 @@ const ProductCard = ({ product }) => {
         <p className="text-sm font-semibold text-gray-800 truncate">{product.name}</p>
 
         {/* Star rating (optional, uncomment if needed) */}
-        <div className="flex items-center gap-0.5 mt-1 text-green-500 text-sm">
+        <div className="flex items-center gap-0.5 mt-1 text-[#50b592] text-sm">
           {Array(5).fill('').map((_, i) =>
             product.rating > i ? <AiFillStar key={i} /> : <AiOutlineStar key={i} />
           )}
-          <p className="text-xs text-green-600">({product.rating})</p>
+          <p className="text-xs text-[#50b592]">({product.rating})</p>
         </div> 
        
 
         {/* Price */}
-        <p className="text-green-600 font-medium text-sm mt-1">
+        <p className="text-[#50b592] font-medium text-sm mt-1">
           {currency}{product.offerPrice}{' '}
           <span className="text-gray-500/60 text-xs line-through">{currency}{product.price}</span>
         </p>
@@ -45,12 +45,12 @@ const ProductCard = ({ product }) => {
           {!cartItems[product._id] ? (
             <button
               onClick={() => addToCart(product._id)}
-              className="w-7 h-7 flex items-center text-white justify-center rounded-full bg-green-600 hover:bg-green-400 cursor-pointer transition text-sm"
+              className="w-7 h-7 flex items-center text-white justify-center rounded-full bg-[#50b592] hover:bg-[#54cea4] cursor-pointer transition text-sm"
             >
               <FiShoppingCart size={15} />
             </button>
           ) : (
-            <div className="flex items-center bg-green-600 rounded-full px-2 py-0.5 space-x-2 text-white text-xs">
+            <div className="flex items-center bg-[#50b592] rounded-full px-2 py-0.5 space-x-2 text-white text-xs">
               <button onClick={() => {removeFromCart(product._id)}} className="px-1 cursor-pointer">-</button>
               <span>{cartItems[product._id]}</span>
               <button onClick={()=>{addToCart(product._id)}} className="px-1 cursor-pointer">+</button>

@@ -22,14 +22,14 @@ function Navbar() {
 
       {/* Brand Logo */}
       <NavLink to="/" onClick={()=> setOpen(false)}>
-        <div className="text-2xl font-bold text-green-600 cursor-pointer">eGrocery</div>
+        <div className="text-2xl font-bold text-[#4ca586] cursor-pointer">eGrocery</div>
       </NavLink>
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-6 flex-wrap">
-        <NavLink to="/" className="hover:text-green-600">Home</NavLink>
-        <NavLink to="/products" className="hover:text-green-600">All Products</NavLink>
-        <NavLink to="/contact" className="hover:text-green-600">Contact</NavLink>
+        <NavLink to="/" className="hover:text-[#4ca586]">Home</NavLink>
+        <NavLink to="/products" className="hover:text-[#4ca586]">All Products</NavLink>
+        <NavLink to="/contact" className="hover:text-[#4ca586]">Contact</NavLink>
 
         {/* Search bar (desktop) */}
         <div className="flex items-center text-sm gap-2 border border-gray-300 px-3 py-1 rounded-full w-64">
@@ -43,14 +43,14 @@ function Navbar() {
         {/* Cart icon */}
         <div onClick={()=>navigate("/cart")}className="relative cursor-pointer">
           <FiShoppingCart className="text-xl" />
-          <button className="absolute -top-2 -right-3 text-xs text-white bg-green-600 w-[18px] h-[18px] rounded-full">3</button>
+          <button className="absolute -top-2 -right-3 text-xs text-white bg-[#4ca586] w-[18px] h-[18px] rounded-full">3</button>
         </div>
 
         {/* Login / Logout */}
         {!user ? (
           <button
             onClick={() => setShowUserLogin(true)}
-            className="cursor-pointer px-6 py-2 bg-green-600 hover:bg-green-700 transition-all duration-200 ease-in-out text-white rounded-full text-sm"
+            className="cursor-pointer px-6 py-2 bg-[#4ca586] hover:bg-[#54cea4] transition-all duration-200 ease-in-out text-white rounded-full text-sm"
           >
             Login
           </button>
@@ -117,7 +117,7 @@ function Navbar() {
               setOpen(false);
               setShowUserLogin(true);
             }}
-            className="w-full text-center px-6 py-2 bg-green-600 hover:bg-green-700 transition-all duration-200 ease-in-out text-white rounded-full text-sm"
+            className="w-full text-center px-6 py-2 bg-[#4ca586] hover:bg-green-700 transition-all duration-200 ease-in-out text-white rounded-full text-sm"
           >
             Login
           </button>
@@ -127,7 +127,7 @@ function Navbar() {
               setOpen(false);
               logout();
             }}
-            className="w-full text-center px-6 py-2 bg-green-600 hover:bg-green-700 transition-all duration-200 ease-in-out text-white rounded-full text-sm"
+            className="w-full text-center px-6 py-2 bg-[#4ca586] hover:bg-green-700 transition-all duration-200 ease-in-out text-white rounded-full text-sm"
           >
             Log Out
           </button>

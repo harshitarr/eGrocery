@@ -11,15 +11,15 @@ const BottomBanner = () => {
 
       <div className='absolute inset-0 flex flex-col items-center md:items-end md:justify-center pt-16 md:pt-0 md:pr-24 lg:mr-9'>
           <div>
-              <h1 className='text-2xl md:text-2xl lg:text-3xl font-bold text-primary mb-6 md:mb-3 lg:mb-6'>
+              <h1 className='text-3xl md:text-2xl lg:text-3xl font-bold text-primary mb-6 md:mb-3 lg:mb-6'>
                   Why We Are The Best?
               </h1>
               {features.map((feature,index)=>(
                 <div key={index} className='flex items-center gap-4 mt-2'>
                      <img src={feature.icon} alt={feature.title} className='md:w-9 lg:w-11 w-9'/>
                      <div>
-                         <h3 className='text-lg md:text-md lg:text-xl font-semibold'>{feature.title}</h3>
-                          <p className='text-gray-500/70 text-xs  lg:text-sm'>{feature.description}</p>
+                         <h3 className='text-xl md:text-sm lg:text-xl font-semibold'>{feature.title}</h3>
+                          <p className='text-gray-500/70 text-s md:text-xs lg:text-sm'>{feature.description}</p>
                      </div>
 
                 </div>

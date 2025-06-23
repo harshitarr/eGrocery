@@ -22,7 +22,7 @@ const MainBanner = () => {
         {/* Shop Now - Always visible */}
         <Link 
           to='/products' 
-          className='group flex items-center justify-center gap-2 px-7 py-3 text-base md:px-6 md:py-2.5 md:text-sm lg:px-9 lg:py-3 lg:text-base bg-green-600 hover:bg-primary-dull transition rounded text-white cursor-pointer'
+          className='group flex items-center justify-center gap-2 px-7 py-3 text-base md:px-6 md:py-2.5 md:text-sm lg:px-9 lg:py-3 lg:text-base bg-[#50b592] hover:bg-primary-dull transition rounded text-white cursor-pointer'
         > 
           Shop Now 
           <FaRegArrowAltCircleRight className='text-white transition group-hover:translate-x-1' />
@@ -31,10 +31,10 @@ const MainBanner = () => {
         {/* Explore Deals - Visible on md and up */}
         <Link 
           to='/products' 
-          className='group hidden md:flex items-center gap-2 px-7 py-3 text-sm md:px-6 md:py-2.5 md:text-sm lg:px-9 lg:py-3 lg:text-base border border-green-600 text-green-600 hover:bg-transparent transition rounded cursor-pointer'
+          className='group hidden md:flex items-center gap-2 px-7 py-3 text-sm md:px-6 md:py-2.5 md:text-sm lg:px-9 lg:py-3 lg:text-base border border-[#50b592] text-[#50b592] hover:bg-transparent transition rounded cursor-pointer'
         > 
           Explore Deals
-          <FaRegArrowAltCircleRight className='transition group-hover:translate-x-1 text-green-600' />
+          <FaRegArrowAltCircleRight className='transition group-hover:translate-x-1 text-[#50b592]' />
         </Link>
       </div>
 
