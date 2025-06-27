@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FiSearch } from "react-icons/fi";
-import { FiShoppingCart } from "react-icons/fi";
-import { FiMenu } from "react-icons/fi";
+import { FiSearch, FiShoppingCart, FiMenu } from "react-icons/fi";
 import { useAppContext } from '../context/AppContext';
 import { FaUserCircle } from "react-icons/fa";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false); // dropdown toggle
-  const { user, setUser, setShowUserLogin, navigate } = useAppContext();
+  const [profileOpen, setProfileOpen] = useState(false);
+  const { user, setUser, setShowUserLogin, navigate, setSearchQuery, searchQuery } = useAppContext();
 
   const logout = async () => {
     setUser(null);
@@ -17,11 +15,17 @@ function Navbar() {
     setProfileOpen(false);
   };
 
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      navigate('/products');
+    }
+  }, [searchQuery]);
+
   return (
     <nav className="flex items-center justify-between flex-wrap px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative z-50">
 
       {/* Brand Logo */}
-      <NavLink to="/" onClick={()=> setOpen(false)}>
+      <NavLink to="/" onClick={() => setOpen(false)}>
         <div className="text-2xl font-bold text-[#4ca586] cursor-pointer">eGrocery</div>
       </NavLink>
 
@@ -34,14 +38,16 @@ function Navbar() {
         {/* Search bar (desktop) */}
         <div className="flex items-center text-sm gap-2 border border-gray-300 px-3 py-1 rounded-full w-64">
           <input
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
-            placeholder="Search products" />
+            placeholder="Search products"
+          />
           <FiSearch className="text-gray-500 text-lg" />
         </div>
 
         {/* Cart icon */}
-        <div onClick={()=>navigate("/cart")}className="relative cursor-pointer">
+        <div onClick={() => navigate("/cart")} className="relative cursor-pointer">
           <FiShoppingCart className="text-xl" />
           <button className="absolute -top-2 -right-3 text-xs text-white bg-[#4ca586] w-[18px] h-[18px] rounded-full">3</button>
         </div>
@@ -56,12 +62,9 @@ function Navbar() {
           </button>
         ) : (
           <div className="relative inline-block">
-            {/* Icon */}
             <button onClick={() => setProfileOpen(prev => !prev)}>
               <FaUserCircle className="text-2xl cursor-pointer" />
             </button>
-
-            {/* Dropdown */}
             {profileOpen && (
               <div className="absolute right-0 top-10 bg-white shadow-lg border border-gray-200 rounded-md z-50 min-w-[140px]">
                 <ul className="text-sm py-2">
@@ -104,9 +107,11 @@ function Navbar() {
         {/* Search bar (mobile) */}
         <div className="flex items-center text-sm gap-2 border border-gray-300 px-3 py-1 rounded-full w-full">
           <input
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
-            placeholder="Search products" />
+            placeholder="Search products"
+          />
           <FiSearch className="text-gray-500 text-lg" />
         </div>
 
