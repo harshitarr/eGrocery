@@ -1,59 +1,73 @@
 import React from 'react';
 import { FiShoppingCart } from "react-icons/fi";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
   const { currency, addToCart, removeFromCart, cartItems } = useAppContext();
 
-  const handleAddToCart = () => {
-    addToCart(product);
+  const handleNavigate = () => {
+    navigate(`/products/${product.category.toLowerCase()}/${product._id}`);
+    window.scrollTo(0, 0);
   };
 
-
-
   return product && (
-    <div className="bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all mt-7 w-full max-w-[220px] overflow-hidden">
+    <div
+      onClick={handleNavigate}
+      className="bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all mt-7 w-full max-w-[220px] overflow-hidden"
+    >
       <img
         src={product.image[0]}
         alt={product.name}
-        className="h-34 object-contain mx-auto cursor-pointer hover:scale-110 transition"
+        className="h-32 object-contain mx-auto cursor-pointer hover:scale-110 transition"
       />
 
-      {/* Bottom gray section */}
       <div className="bg-gray-100 px-3 pt-2 pb-3 rounded-b-lg relative cursor-pointer">
         <p className="text-xs text-gray-500/60">{product.category}</p>
         <p className="text-sm font-semibold text-gray-800 truncate">{product.name}</p>
 
-        {/* Star rating (optional, uncomment if needed) */}
         <div className="flex items-center gap-0.5 mt-1 text-[#50b592] text-sm">
           {Array(5).fill('').map((_, i) =>
             product.rating > i ? <AiFillStar key={i} /> : <AiOutlineStar key={i} />
           )}
           <p className="text-xs text-[#50b592]">({product.rating})</p>
-        </div> 
-       
+        </div>
 
-        {/* Price */}
         <p className="text-[#50b592] font-medium text-sm mt-1">
           {currency}{product.offerPrice}{' '}
-          <span className="text-gray-500/60 text-xs line-through">{currency}{product.price}</span>
+          <span className="text-gray-500/60 text-xs line-through">
+            {currency}{product.price}
+          </span>
         </p>
 
-        {/* Cart / Quantity */}
-        <div onClick = {(e) =>{ e.stopPropagation()}}className="absolute bottom-2 right-3">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="absolute bottom-2 right-3"
+        >
           {!cartItems[product._id] ? (
             <button
-              onClick={() => addToCart(product._id)}
+              onClick={() => addToCart(product)}
               className="w-7 h-7 flex items-center text-white justify-center rounded-full bg-[#50b592] hover:bg-[#54cea4] cursor-pointer transition text-sm"
             >
               <FiShoppingCart size={15} />
             </button>
           ) : (
             <div className="flex items-center bg-[#50b592] rounded-full px-2 py-0.5 space-x-2 text-white text-xs">
-              <button onClick={() => {removeFromCart(product._id)}} className="px-1 cursor-pointer">-</button>
+              <button
+                onClick={() => removeFromCart(product._id)}
+                className="px-1 cursor-pointer"
+              >
+                -
+              </button>
               <span>{cartItems[product._id]}</span>
-              <button onClick={()=>{addToCart(product._id)}} className="px-1 cursor-pointer">+</button>
+              <button
+                onClick={() => addToCart(product)}
+                className="px-1 cursor-pointer"
+              >
+                +
+              </button>
             </div>
           )}
         </div>

@@ -7,7 +7,14 @@ import { FaUserCircle } from "react-icons/fa";
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const { user, setUser, setShowUserLogin, navigate, setSearchQuery, searchQuery } = useAppContext();
+  const {
+    user,
+    setUser,
+    setShowUserLogin,
+    navigate,
+    handleSearchQuery,
+    searchQuery
+  } = useAppContext();
 
   const logout = async () => {
     setUser(null);
@@ -38,7 +45,8 @@ function Navbar() {
         {/* Search bar (desktop) */}
         <div className="flex items-center text-sm gap-2 border border-gray-300 px-3 py-1 rounded-full w-64">
           <input
-            onChange={(e) => setSearchQuery(e.target.value)}
+            value={searchQuery}
+            onChange={(e) => handleSearchQuery(e.target.value)}
             className="w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
             placeholder="Search products"
@@ -107,7 +115,8 @@ function Navbar() {
         {/* Search bar (mobile) */}
         <div className="flex items-center text-sm gap-2 border border-gray-300 px-3 py-1 rounded-full w-full">
           <input
-            onChange={(e) => setSearchQuery(e.target.value)}
+            value={searchQuery}
+            onChange={(e) => handleSearchQuery(e.target.value)}
             className="w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
             placeholder="Search products"

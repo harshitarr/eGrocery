@@ -1,26 +1,28 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { dummyProducts } from '../assets/assets';
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
+import Fuse from 'fuse.js';
 
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
   const currency = import.meta.env.VITE_CURRENCY;
   const navigate = useNavigate();
-  
+
   const [user, setUser] = useState(null);
   const [IsSeller, setIsSeller] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const [cartItems, setCartItems] = useState({});
-  const [searchQuery, setSearchQuery] = useState({});
-
 
   // Fetch dummy products
   const fetchProducts = async () => {
     setProducts(dummyProducts);
+    setFilteredProducts(dummyProducts);
   };
 
   // Add item to cart
@@ -37,36 +39,49 @@ const AppContextProvider = ({ children }) => {
     toast.success('Added to Cart');
   };
 
-  //Update cart item quantity
+  // Update cart item quantity
+  const updateCartItem = (itemId, quantity) => {
+    let cartData = structuredClone(cartItems);
+    cartData[itemId] = quantity;
+    setCartItems(cartData);
+    toast.success("Cart Updated");
+  };
 
-  const updateCartItem = (itemId , quantity)=>{
-
-    let cartData = structuredClone(cartItems)
-    cartData[itemId] = quantity
-    setCartItems(cartData)
-    toast.success("Cart Updated")
-  }
-
-  //Remove products from Cart
-
+  // Remove products from Cart
   const removeFromCart = (itemId) => {
+    let cartData = structuredClone(cartItems);
+    if (cartData[itemId]) {
+      cartData[itemId] -= 1;
 
-    let cartData = structuredClone(cartItems)
-    if(cartData[itemId]){
-
-      cartData[itemId] -= 1
-
-      if(cartData[itemId]==0){
-         delete cartData[itemId]
+      if (cartData[itemId] === 0) {
+        delete cartData[itemId];
       }
     }
 
-    toast.success("Removed from Cart")
-    setCartItems(cartData)
-  }
+    toast.success("Removed from Cart");
+    setCartItems(cartData);
+  };
+
+  // Fuzzy Search Handler
+  const handleSearchQuery = (query) => {
+    setSearchQuery(query);
+
+    if (query.trim() === '') {
+      setFilteredProducts(products);
+      return;
+    }
+
+    const fuse = new Fuse(products, {
+      keys: ['name', 'description'],
+      threshold: 0.3,
+    });
+
+    const results = fuse.search(query).map(result => result.item);
+    setFilteredProducts(results);
+  };
 
   useEffect(() => {
-    fetchProducts(); 
+    fetchProducts();
   }, []);
 
   const value = {
@@ -78,15 +93,14 @@ const AppContextProvider = ({ children }) => {
     showUserLogin,
     setShowUserLogin,
     products,
+    filteredProducts,
+    handleSearchQuery,
     currency,
-    cartItems,
     addToCart,
     updateCartItem,
     removeFromCart,
     cartItems,
-    searchQuery,
-    setSearchQuery
-   
+    searchQuery
   };
 
   return (
@@ -96,5 +110,5 @@ const AppContextProvider = ({ children }) => {
   );
 };
 
-export { AppContextProvider }; 
+export { AppContextProvider };
 export const useAppContext = () => useContext(AppContext);
