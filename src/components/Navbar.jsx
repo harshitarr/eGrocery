@@ -13,7 +13,8 @@ function Navbar() {
     setShowUserLogin,
     navigate,
     handleSearchQuery,
-    searchQuery
+    searchQuery,
+    getCartCount
   } = useAppContext();
 
   const logout = async () => {
@@ -57,7 +58,7 @@ function Navbar() {
         {/* Cart icon */}
         <div onClick={() => navigate("/cart")} className="relative cursor-pointer">
           <FiShoppingCart className="text-xl" />
-          <button className="absolute -top-2 -right-3 text-xs text-white bg-[#4ca586] w-[18px] h-[18px] rounded-full">3</button>
+          <button className="absolute -top-2 -right-3 text-xs text-white bg-[#4ca586] w-[18px] h-[18px] rounded-full">{getCartCount()}</button>
         </div>
 
         {/* Login / Logout */}
