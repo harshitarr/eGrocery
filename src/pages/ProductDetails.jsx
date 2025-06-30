@@ -1,40 +1,41 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useAppContext } from '../context/AppContext';
-import { Link , useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import ProductCard from '../components/ProductCard';
 
 const ProductDetails = () => {
-  const {products , navigate , currency , addToCart} = useAppContext()
-  const {id} = useParams()
+  const { products, navigate, currency, addToCart } = useAppContext();
+  const { id } = useParams();
 
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
 
-  const product = products.find((item)=>item._id === id)
+  const product = products.find((item) => item._id === id);
 
-  useEffect(()=>{
-
-    if(products.length > 0){
-
-        let productsCopy = products.slice()
-        productsCopy = productsCopy.filter((item)=>product.category === item.category)
-        setRelatedProducts(productsCopy.slice(0,5))
+  useEffect(() => {
+    if (products.length > 0 && product) {
+      let productsCopy = products.slice();
+      productsCopy = productsCopy.filter(
+        (item) =>
+          item.category === product.category &&
+          item._id !== product._id &&
+          item.inStock
+      );
+      setRelatedProducts(productsCopy.slice(0, 5));
     }
+  }, [products, product]);
 
-  },[products])
-
-  useEffect(()=>{
-
-    setThumbnail(product?.image[0]? product.image[0]:null)
-
-  },[product])
+  useEffect(() => {
+    setThumbnail(product?.image[0] ? product.image[0] : null);
+  }, [product]);
 
   return (
     product && (
       <div className="mt-12">
         <p>
-          <Link to={'/'}>Home</Link> /
-          <Link to={'/products'}> Products</Link> /
+          <Link to="/">Home</Link> /
+          <Link to="/products"> Products</Link> /
           <Link to={`/products/${product.category.toLowerCase()}`}> {product.category}</Link> /
           <Link className="text-[#50b592]"> {product.name}</Link>
         </p>
@@ -62,15 +63,27 @@ const ProductDetails = () => {
             <h1 className="text-3xl font-medium">{product.name}</h1>
 
             <div className="flex items-center gap-0.5 mt-1 text-[#50b592] text-sm">
-              {Array(5).fill('').map((_, i) =>
-                product.rating > i ? <AiFillStar key={i} /> : <AiOutlineStar key={i} />
-              )}
+              {Array(5)
+                .fill('')
+                .map((_, i) =>
+                  product.rating > i ? (
+                    <AiFillStar key={i} />
+                  ) : (
+                    <AiOutlineStar key={i} />
+                  )
+                )}
               <p className="text-xs text-[#50b592]">({product.rating})</p>
             </div>
 
             <div className="mt-6">
-              <p className="text-gray-500/70 line-through">MRP: {currency}{product.price}</p>
-              <p className="text-2xl font-medium">MRP: {currency}{product.offerPrice}</p>
+              <p className="text-gray-500/70 line-through">
+                MRP: {currency}
+                {product.price}
+              </p>
+              <p className="text-2xl font-medium">
+                MRP: {currency}
+                {product.offerPrice}
+              </p>
               <span className="text-gray-500/70">(inclusive of all taxes)</span>
             </div>
 
@@ -82,14 +95,50 @@ const ProductDetails = () => {
             </ul>
 
             <div className="flex items-center mt-10 gap-4 text-base">
-              <button onClick={()=>addToCart(product._id)} className="w-full py-3.5 cursor-pointer font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition">
+              <button
+                onClick={() => addToCart(product._id)}
+                className="w-full py-3.5 cursor-pointer font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition"
+              >
                 Add to Cart
               </button>
-              <button onClick={()=>{addToCart(product._id);navigate("/cart")}} className="w-full py-3.5 cursor-pointer font-medium bg-[#54cea4] text-white hover:bg-[#50b592] transition">
+              <button
+                onClick={() => {
+                  addToCart(product._id);
+                  navigate("/cart");
+                }}
+                className="w-full py-3.5 cursor-pointer font-medium bg-[#54cea4] text-white hover:bg-[#50b592] transition"
+              >
                 Buy now
-              </button> {/* here in buynow button , if we click it - both adds to the cart and also navigates to the cart page*/}
+              </button>
             </div>
           </div>
+        </div>
+
+        <div className="flex flex-col items-center mt-20">
+          <div className="flex flex-col items-center w-max">
+            <p className="text-xl md:text-2xl lg:text-3xl font-medium">
+              Related Products
+            </p>
+            <div className="w-20 h-0.5 bg-primary rounded-full mt-2"></div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6 lg:grid-cols-5 mt-6 w-full lg:ml-55">
+            {relatedProducts.filter((product) =>product.inStock).map ((product,index)=>(
+
+              <ProductCard key={index} product={product}/>
+            ))}
+
+
+          </div>
+
+          <button
+            onClick={() => {
+              navigate('/products');
+              window.scrollTo(0, 0);
+            }}
+            className="mx-auto cursor-pointer px-12 my-16 py-2.5 border rounded text-primary hover:bg-primary/10 transition border-[#50b592] text-[#50b592] hover:bg-[#f7fffc]"
+          >
+            See More
+          </button>
         </div>
       </div>
     )
