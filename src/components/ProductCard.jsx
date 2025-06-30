@@ -13,7 +13,24 @@ const ProductCard = ({ product }) => {
     window.scrollTo(0, 0);
   };
 
-  return product && (
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    addToCart(product._id);
+  };
+
+  const handleRemoveFromCart = (e) => {
+    e.stopPropagation();
+    removeFromCart(product._id);
+  };
+
+  const handleIncrement = (e) => {
+    e.stopPropagation();
+    addToCart(product._id);
+  };
+
+  const isInCart = cartItems?.[product._id] > 0;
+
+  return (
     <div
       onClick={handleNavigate}
       className="bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all mt-7 w-full max-w-[220px] overflow-hidden"
@@ -42,28 +59,28 @@ const ProductCard = ({ product }) => {
           </span>
         </p>
 
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="absolute bottom-2 right-3"
-        >
-          {!cartItems[product._id] ? (
+        <div className="absolute bottom-2 right-3">
+          {!isInCart ? (
             <button
-              onClick={() => addToCart(product)}
+              onClick={handleAddToCart}
               className="w-7 h-7 flex items-center text-white justify-center rounded-full bg-[#50b592] hover:bg-[#54cea4] cursor-pointer transition text-sm"
             >
               <FiShoppingCart size={15} />
             </button>
           ) : (
-            <div className="flex items-center bg-[#50b592] rounded-full px-2 py-0.5 space-x-2 text-white text-xs">
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center bg-[#50b592] rounded-full px-2 py-0.5 space-x-2 text-white text-xs"
+            >
               <button
-                onClick={() => removeFromCart(product._id)}
+                onClick={handleRemoveFromCart}
                 className="px-1 cursor-pointer"
               >
                 -
               </button>
               <span>{cartItems[product._id]}</span>
               <button
-                onClick={() => addToCart(product)}
+                onClick={handleIncrement}
                 className="px-1 cursor-pointer"
               >
                 +
