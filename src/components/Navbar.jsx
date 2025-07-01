@@ -99,10 +99,16 @@ function Navbar() {
         )}
       </div>
 
-      {/* Hamburger Button (Mobile Only) */}
-      <button onClick={() => setOpen(!open)} aria-label="Toggle Menu" className="sm:hidden">
-        <FiMenu className='text-xl' />
-      </button>
+      {/* Mobile Buttons (Hamburger + Cart) */}
+      <div className="flex items-center gap-6 sm:hidden">
+        <div onClick={() => navigate("/cart")} className="relative cursor-pointer">
+          <FiShoppingCart className="text-xl" />
+          <button className="absolute -top-2 -right-3 text-xs text-white bg-[#4ca586] w-[18px] h-[18px] rounded-full">{getCartCount()}</button>
+        </div>
+        <button onClick={() => setOpen(!open)} aria-label="Toggle Menu">
+          <FiMenu className='text-xl' />
+        </button>
+      </div>
 
       {/* Mobile Menu */}
       <div className={`${open ? 'flex' : 'hidden'} absolute top-full left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-4 px-5 text-sm sm:hidden z-40`}>
