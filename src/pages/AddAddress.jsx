@@ -55,20 +55,20 @@ const AddAddress = () => {
               <InputField handleChange={handleChange} address={address} name='lastName' type='text' placeholder='Last Name' />
             </div>
             <InputField handleChange={handleChange} address={address} name='email' type='email' placeholder='Add Email' />
-            <InputField handleChange={handleChange} address={address} name='street' type='text' placeholder='Enter Street' />
-            <div className='grid grid-cols gap-4'>
-              <InputField handleChange={handleChange} address={address} name='city' type='text' placeholder='Enter City' />
-              <InputField handleChange={handleChange} address={address} name='country' type='text' placeholder='Enter Country' />
+            <InputField handleChange={handleChange} address={address} name='street' type='text' placeholder='Street' />
+            <div className='grid grid-cols-2 gap-4'>
+              <InputField handleChange={handleChange} address={address} name='city' type='text' placeholder='City' />
+              <InputField handleChange={handleChange} address={address} name='state' type='text' placeholder='state' />
             </div>
-            <div className='grid grid-cols gap-4'>
-              <InputField handleChange={handleChange} address={address} name='zipcode' type='text' placeholder='Enter Zip code' />
-              <InputField handleChange={handleChange} address={address} name='Country' type='text' placeholder='Enter Country' />
+            <div className='grid grid-cols-2 gap-4'>
+              <InputField handleChange={handleChange} address={address} name='zipcode' type='text' placeholder='Zip code' />
+              <InputField handleChange={handleChange} address={address} name='Country' type='text' placeholder='Country' />
             </div>
             <InputField handleChange={handleChange} address={address} name='phone' type='text' placeholder='Enter Phone No' />
             <button className='w-full mt-6 bg-[#50b592] text-white py-3 hover:bg-[#54cea4] transition cursor-pointer uppercase'>Save Address</button>
           </form>
         </div>
-        <img src={addressImage} alt="side-image" />
+        <img src={addressImage} alt="side-image" className='sm:w-[400px] md:ml-5 lg:mr-10 lg:w-[450px]' />
       </div> 
     </div>
   );
