@@ -138,7 +138,7 @@ function Navbar() {
               setOpen(false);
               setShowUserLogin(true);
             }}
-            className="w-full text-center px-6 py-2 bg-[#4ca586] hover:bg-green-700 transition-all duration-200 ease-in-out text-white rounded-full text-sm"
+            className="w-full text-center px-6 py-2 bg-[#4ca586] hover:bg-[#54cea4] transition-all duration-200 ease-in-out text-white rounded-full text-sm"
           >
             Login
           </button>
@@ -148,7 +148,7 @@ function Navbar() {
               setOpen(false);
               logout();
             }}
-            className="w-full text-center px-6 py-2 bg-[#4ca586] hover:bg-green-700 transition-all duration-200 ease-in-out text-white rounded-full text-sm"
+            className="w-full text-center px-6 py-2 bg-[#4ca586] hover:bg-[#54cea4] transition-all duration-200 ease-in-out text-white rounded-full text-sm"
           >
             Log Out
           </button>
